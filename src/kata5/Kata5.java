@@ -10,25 +10,18 @@ public class Kata5 {
     public static void main(String[] args) {
 
         try {
+            Class.forName("org.sqlite.JDBC");
 
             Connection conexion;
-            conexion = DriverManager.getConnection("jdbc:sqlite:Prueba.db");
+            conexion = DriverManager.getConnection("jdbc:sqlite:KATA5.db");
             conexion.setAutoCommit(false);
 
             Statement enunciado;
             enunciado = conexion.createStatement();
 
-            ResultSet resultados;
-            resultados = enunciado.executeQuery("SELECT * FROM PEOPLE;");
+            enunciado.execute("CREATE TABLE 'EMAIL'('Id' INTEGER PRIMARY KEY AUTOINCREMENT, 'Mail' TEXT NOT NULL);");
+            conexion.commit();
 
-            while(resultados.next()) {
-                System.out.println(resultados.getString("Id") + "\t" +
-                        resultados.getString("Name") + "\t" +
-                        resultados.getString("Apellidos") + "\t" +
-                        resultados.getString("Departamento"));
-            }
-
-            resultados.close();
             enunciado.close();
             conexion.close();
 
